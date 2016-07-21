@@ -1,6 +1,8 @@
 function main
     % Mesh and material constants
+    global n
     n = [100 25 1]; %shape of the object
+    global dx
     dx = [5e-9 5e-9 3e-9]; %dimensions of individual magnets
     mu0 = 4e-7 * pi;
     gamma = 2.211e5;
@@ -8,6 +10,7 @@ function main
     A = 1.3e-11;
     alpha = 0.02;
 
+    global n_demag
     n_demag = zeros(n(1)*2-1,n(2)*2-1,n(3)*2-1,6);
     m_pad = zeros(n(1)*2-1, n(2)*2-1, n(3)*2-1, 3);
 
