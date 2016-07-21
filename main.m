@@ -16,12 +16,10 @@ function main
 
 
     % Calculate demag tensor. Elements | Permutation | Function to be used
-    set_n_demag(1,[0 1 2], 'f');
-    set_n_demag(2,[0 1 2], 'g');
-    set_n_demag(3,[0 2 1], 'g');
-    set_n_demag(4,[1 2 0], 'f');
-    set_n_demag(5,[1 2 0], 'g');
-    set_n_demag(6,[2 0 1], 'f');
-
-    f_n_demag = fftn(n_demag, n(n>1));
+    set_n_demag(1,[0 1 2]+1, 'f');
+    set_n_demag(2,[0 1 2]+1, 'g');
+    set_n_demag(3,[0 2 1]+1, 'g');
+    set_n_demag(4,[1 2 0]+1, 'f');
+    set_n_demag(5,[1 2 0]+1, 'g');
+    set_n_demag(6,[2 0 1]+1, 'f');
 end
