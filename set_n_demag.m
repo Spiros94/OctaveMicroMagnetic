@@ -15,9 +15,9 @@ function set_n_demag(iteration, permut, func)
                     x = (idx(permut(1)) + binaryMatrix(s,permut(1)) - binaryMatrix(s,permut(1)+3)) *dx(permut(1));
                     y = (idx(permut(2)) + binaryMatrix(s,permut(2)) - binaryMatrix(s,permut(2)+3)) *dx(permut(2));
                     z = (idx(permut(3)) + binaryMatrix(s,permut(3)) - binaryMatrix(s,permut(3)+3)) *dx(permut(3));
-                    value = value + ( (-1^sum(binaryMatrix(s,:))) * newells(func,x,y,z) );
+                    value = value + ((-1)^sum(binaryMatrix(s,:))) * newells(func,x,y,z);
                 end
-                n_demag(i,j,l,iteration) = - value / ( 4*pi*prod(dx) );
+                n_demag(i,j,l,iteration) = (-value) / ( 4*pi*prod(dx) );
             end % l loop
         end % j  loop
     end % i loop
