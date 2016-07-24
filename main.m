@@ -12,14 +12,22 @@ function main
 
     global n_demag
     n_demag = zeros(n(1)*2-1,n(2)*2-1,n(3)*2-1,6);
+    global m_pad
     m_pad = zeros(n(1)*2-1, n(2)*2-1, n(3)*2-1, 3);
 
-
+    
     % Calculate demag tensor. Elements | Permutation | Function to be used
+    %{
+    !!! -- Loading values exported previously for TESTING purposes
     set_n_demag(1,[0 1 2]+1, 'f');
     set_n_demag(2,[0 1 2]+1, 'g');
     set_n_demag(3,[0 2 1]+1, 'g');
     set_n_demag(4,[1 2 0]+1, 'f');
     set_n_demag(5,[1 2 0]+1, 'g');
     set_n_demag(6,[2 0 1]+1, 'f');
+    %}
+
+    n_demag = load('n_demag.mat');
+    n_demag = n_demag.n_demag;
+    
 end
