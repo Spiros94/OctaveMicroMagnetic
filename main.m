@@ -1,12 +1,15 @@
 function main
     % Mesh and material constants
     global n
-    n = [4 2 1]; %shape of the object
+    n = [3 4 2]; %shape of the object
     global dx
     dx = [5e-9 5e-9 3e-9]; %dimensions of individual magnets
+    global mu0
     mu0 = 4e-7 * pi;
     gamma = 2.211e5;
+    global ms
     ms = 8e5;
+    global A
     A = 1.3e-11;
     global alpha
     alpha = 1.0; % starts with 1 for relaxation
