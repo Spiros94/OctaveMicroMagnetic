@@ -6,6 +6,7 @@ function main
     dx = [5e-9 5e-9 3e-9]; %dimensions of individual magnets
     global mu0
     mu0 = 4e-7 * pi;
+    global gamma
     gamma = 2.211e5;
     global ms
     ms = 8e5;
