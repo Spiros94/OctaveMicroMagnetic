@@ -30,25 +30,42 @@ function main
     set_n_demag(5,[1 2 0]+1, 'g');
     set_n_demag(6,[2 0 1]+1, 'f');
     
-
-    %n_demag = load('n_demag_matlab.mat');
-    %n_demag = n_demag.n_demag;
-    
     f_n_demag = n_demag;
     for i = 1:size(n,2)
        if n(i) > 1
           f_n_demag = fft(f_n_demag, [], i); 
        end
     end
-    
+   
+   global m
    m = zeros(n(1), n(2), n(3), 3);
    m(n(1),:,:,2) = 1.0;
    m(1,:,:,2) = 1.0;
    m(2:n(1)-1,:,:,1) = 1.0;
    
    for i = 1:5000 % Call LLG 5000 times to relax
-       llg(m,2e-13,0);
+       llg(2e-13,0);  % args(m, dt, h_zee)
    end
-    
-    
+   
+   alpha = 0.02;
+   dt = 5e-15;
+
+   h_zee = zeros(size(n));
+   for i = 1:n(1)
+      for j = 1:n(2)
+         for l = 1:n(3)
+             h_zee(i,j,l,1) = -24.6e-3/mu0;
+             h_zee(i,j,l,2) = 4.3e-3/mu0;
+             h_zee(i,j,l,3) = 0.0;
+         end
+      end
+   end
+   
+   fid = fopen('output.txt', 'w');
+   for i = 0:(floor(1e-9/dt)-1)
+       output_buffer = [(i*1e9*dt) mean(reshape(m(:,:,:,1),1,[])) mean(reshape(m(:,:,:,2),1,[])) mean(reshape(m(:,:,:,3),1,[]))];
+       fprintf(fid, '%0.15f %0.15f %0.15f %0.15f \n', output_buffer);
+       llg(dt,h_zee);
+   end
+   beep
 end
