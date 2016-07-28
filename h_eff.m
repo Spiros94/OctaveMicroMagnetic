@@ -1,4 +1,4 @@
-function rtn = h_eff(m)
+function rtn = h_eff()
     global m_pad
     global n
     global f_n_demag
@@ -6,6 +6,7 @@ function rtn = h_eff(m)
     global ms
     global mu0
     global A
+    global m
     
     m_pad(1:n(1),1:n(2),1:n(3),:) = m;
     f_m_pad = m_pad;
@@ -42,31 +43,21 @@ function rtn = h_eff(m)
         dx_val = dx(arr_index)^2;
         
         if n(arr_index) == 1
-            h_ex = h_ex + (m/dx_val);
+            h_ex = h_ex + (m./dx_val);
         else 
             number = [(floor(i/3)*2) ones(1,(n(arr_index)-2)) (2-(floor(i/3)*2))];
             need_columns = [];
+            for l = 1:length(number) % Select only columns you want from the current axis and/or duplicate them
+               if l > 0
+                  need_columns = [need_columns repmat(l,[1,number(l)])];
+               end 
+            end
             if arr_index == 1 % First axis
-                for l = 1:length(number) % Select only columns you want from the current axis and/or duplicate them
-                   if l > 0
-                      need_columns = [need_columns repmat(l,[1,number(l)])];
-                   end
-                end
-                h_ex = h_ex + m(need_columns,:,:,:)/dx_val;
+                h_ex = h_ex + m(need_columns,:,:,:)./dx_val;
             elseif arr_index == 2 % Second axis
-                for l = 1:length(number) % Select only columns you want from the current axis and/or duplicate them
-                   if l > 0
-                      need_columns = [need_columns repmat(l,[1,number(l)])];
-                   end
-                end
-                h_ex = h_ex + (m(:,need_columns,:,:))/dx_val;
+                h_ex = h_ex + (m(:,need_columns,:,:))./dx_val;
             else % Third axis
-                for l = 1:length(number) % Select only columns you want from the current axis and/or duplicate them
-                   if l > 0
-                      need_columns = [need_columns repmat(l,[1,number(l)])];
-                   end 
-                end
-                h_ex = h_ex + (m(:,:,need_columns,:))/dx_val;
+                h_ex = h_ex + (m(:,:,need_columns,:))./dx_val;
             end
         end
     end
