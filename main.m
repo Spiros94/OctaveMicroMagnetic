@@ -1,7 +1,7 @@
 function main
     % Mesh and material constants
     global n
-    n = [3 4 2]; %shape of the object
+    n = [50 25 2]; %shape of the object
     global dx
     dx = [5e-9 5e-9 3e-9]; %dimensions of individual magnets
     global mu0
