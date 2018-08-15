@@ -30,11 +30,3 @@ function rtn = newellsG(x, y, z)
           -(z*x^2/2.0) * atan((y*z)/(x * sqrt(x^2 + y^2 + z^2) + low_eps))...
           -(x*y * sqrt(x^2 + y^2 + z^2))/3.0;
 end
-
-
-
-
-
-
-
-
