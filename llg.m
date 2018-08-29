@@ -4,10 +4,11 @@ function llg(dt,h_zee)
     global m
     global asp
     
-    if strcmp(asp.PauseLLG.Enable,'off')
-        pause
+    if asp.PauseLLG.Value == 1
+        disp('Simulation Paused');
+        keyboard
     end
-    
+
     h = h_eff() + h_zee;
     
     cros_m_h = cross(m, h, 4);
