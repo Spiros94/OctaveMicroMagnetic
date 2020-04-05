@@ -84,7 +84,7 @@ function main()
    for i = 0:(floor(1e-9/dt)-1)
        output_buffer = [output_buffer; (i*1e9*dt) mean(reshape(m(:,:,:,1),1,[])) mean(reshape(m(:,:,:,2),1,[])) mean(reshape(m(:,:,:,3),1,[]))];
        if mod(cnt,500) == 0 % draw graph every 500 steps
-           plot(app.UIAxes, output_buffer(:,1), output_buffer(:,2), output_buffer(:,1), output_buffer(:,3), output_buffer(:,1), output_buffer(:,4));
+           plot(output_buffer(:,1), output_buffer(:,2), output_buffer(:,1), output_buffer(:,3), output_buffer(:,1), output_buffer(:,4));
            drawnow
        end
        cnt = cnt + 1;
