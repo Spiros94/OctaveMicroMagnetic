@@ -2,6 +2,8 @@ function set_n_demag(iteration, permut, func)
     global n
     global dx
     global n_demag
+    % Communications package from Octave Forge for de2bi function
+    % in Octave's command window: pkg install -forge communications
     binaryMatrix = de2bi([0:63], 6, 'left-msb'); % Specify a binary matric to get the sign for each element based on the sum of ones
     for i = 1:size(n_demag,1) % Nested loops to know the index
         for j = 1:size(n_demag,2)

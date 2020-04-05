@@ -1,35 +1,28 @@
-function main(app)
-    global asp
-    asp = app; %Random variable name
-    statusLbl('Init');
-    
-    % Mesh and material constants
+function main()
+  disp('Init');
+     % Mesh and material constants
     global n
-    n = eval(app.ObjShape.Value); %shape of the object
-    app.ObjShape.Editable = 'off';
-    
+    n = [100 25 1]; % Object shape
+ 
     global dx
-    dx = eval(app.CellSize.Value); %dimensions of individual magnets
-    app.CellSize.Editable = 'off';
+    dx = [5e-9 5e-9 3e-9]; %dimensions of individual magnets
     
     global mu0
-    mu0 = eval(app.mu0.Value);
-    app.mu0.Editable = 'off';
+    mu0 = 4e-7 * pi; % mu0
     
     global gamma
-    gamma = app.Gamma.Value;
-    app.Gamma.Editable = 'off';
+    gamma = 2.211e+5;
 
     global ms
-    ms = app.ms.Value;
-    app.ms.Editable = 'off';
+    ms = 8e+05;
     
     global A
     A = 1.3e-11;
     
     global alpha
-    alpha = app.RelaxAlpha.Value;
-    app.RelaxAlpha.Editable = 'off';
+    alpha = 1;  % start with relaxation alpha
+    
+    relax_steps = 5000;
     
 
     global n_demag
@@ -38,7 +31,7 @@ function main(app)
     m_pad = zeros(n(1)*2-1, n(2)*2-1, n(3)*2-1, 3);
     global f_n_demag
 
-    statusLbl('Calculating N Demag');
+    disp('Calculating N Demag');
     % Calculate demag tensor. Elements | Permutation | Function to be used
     set_n_demag(1,[0 1 2]+1, 'f');
     set_n_demag(2,[0 1 2]+1, 'g');
@@ -60,22 +53,19 @@ function main(app)
    m(1,:,:,2) = 1.0;
    m(2:n(1)-1,:,:,1) = 1.0;
    
-   statusLbl('Relaxation');
-   statusLbl(strcat('Relaxation steps:',int2str(app.RelaxSteps.Value)));
+   disp('Relaxation');
+   disp('Relax steps:');
+   disp(relax_steps);
    
-   app.RelaxSteps.Editable = 'off';
-   
-   for i = 1:app.RelaxSteps.Value % Call LLG x times to relax
+   for i = 1:relax_steps % Call LLG x times to relax
        llg(2e-13,0);  % args(m, dt, h_zee)
    end
 
-   alpha = app.Alpha.Value;
-   app.Alpha.Editable = 'off';
+   alpha = 1;
    
-   dt = app.StepSize.Value;
-   app.StepSize.Editable = 'off';
+   dt = 5e-15;
     
-   statusLbl('Calculating Zeeman');
+   disp('Calculating Zeeman field');
    h_zee = zeros(size(n));
    for i = 1:n(1)
       for j = 1:n(2)
@@ -87,7 +77,7 @@ function main(app)
       end
    end
    
-   statusLbl('Solving LLG');
+   disp('Solving LLG');
 
    output_buffer = [];
    cnt = 0;
@@ -100,12 +90,8 @@ function main(app)
        cnt = cnt + 1;
        llg(dt,h_zee);
    end
-   statusLbl('Simulation Finished');
+   disp('Simulation Finished');
    beep
    pause
 end
 
-function statusLbl(x)
-    global asp
-    asp.Label2.Text = x;
-end

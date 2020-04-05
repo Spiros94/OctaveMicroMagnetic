@@ -16,7 +16,7 @@ function rtn = h_eff()
        end
     end
     
-    f_h_demag_pad = zeros(size(f_m_pad),'like',f_m_pad);
+    f_h_demag_pad = zeros(size(f_m_pad), 'like', f_m_pad);
     f_h_demag_pad(:,:,:,1) = sum( (f_n_demag(:,:,:,[1 2 3]).*f_m_pad) , 4);
     f_h_demag_pad(:,:,:,2) = sum( (f_n_demag(:,:,:,[2 4 5]).*f_m_pad) , 4);
     f_h_demag_pad(:,:,:,3) = sum( (f_n_demag(:,:,:,[3 5 6]).*f_m_pad) , 4);
