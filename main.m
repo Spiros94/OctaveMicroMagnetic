@@ -1,5 +1,6 @@
 function main()
   disp('Init');
+  pkg load communications
      % Mesh and material constants
     global n
     n = [100 25 1]; % Object shape
